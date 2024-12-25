@@ -4,6 +4,7 @@ from app.car import Car
 from app.point import Point
 from app.shop import Shop
 
+
 class Customer:
     def __init__(
             self,
@@ -34,25 +35,32 @@ class Customer:
 
     def choose_shop(self, shops: list) -> Shop | None:
         for shop in shops:
-            print(f"{self.name}'s trip to the {shop.name} costs {self._calculate_total_expenses(shop)}")
+            print(f"{self.name}'s trip to the {shop.name} "
+                  f"costs {self._calculate_total_expenses(shop)}")
 
-        cheapest_shop = min(shops, key=lambda shop: self._calculate_total_expenses(shop))
+        cheapest_shop = min(
+            shops,
+            key=lambda shop: self._calculate_total_expenses(shop)
+        )
         total_expenses = self._calculate_total_expenses(cheapest_shop)
         if self.money < total_expenses:
             return None
         self.money -= total_expenses
         return cheapest_shop
 
-
-
-    def _calculate_total_expenses(self, shop) -> float:
+    def _calculate_total_expenses(self, shop: Shop) -> float:
         distance = self.location.calculate_distance_to(shop.location)
-        fuel_expenses = (self.car.calculate_fuel_consumption(distance) * 2) * 2.4
-        groceries_expenses = self._calculate_groceries_expenses(shop.products)
+        fuel_expenses = (
+            (self.car.calculate_fuel_consumption(distance) * 2) * 2.4
+        )
+        groceries_expenses = (
+            self._calculate_groceries_expenses(shop.products)
+        )
 
         return round(fuel_expenses + groceries_expenses, 2)
 
-    def _calculate_groceries_expenses(self, prices):
+    def _calculate_groceries_expenses(self, prices: dict) -> float:
         return sum(
-            prices[product_name] * amount for product_name, amount in self.product_cart.items()
+            prices[product_name] * amount
+            for product_name, amount in self.product_cart.items()
         )

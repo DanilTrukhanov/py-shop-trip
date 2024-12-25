@@ -1,7 +1,8 @@
 from __future__ import annotations
+from typing import Any
 
 from app.point import Point
-from datetime import datetime
+
 
 class Shop:
     def __init__(
@@ -25,19 +26,20 @@ class Shop:
             products=shop_info["products"]
         )
 
-    def sell(self, customer):
-        print(f"Date: 04/01/2021 12:33:41")
-
-        print(f"Thanks, {customer.name}, for your purchase!\nYou have bought:")
+    def sell(self, customer: Any) -> None:
+        print("Date: 04/01/2021 12:33:41")
+        print(f"Thanks, {customer.name}, for your purchase!"
+              f"\nYou have bought: ")
         for name, amount in customer.product_cart.items():
             product_price = amount * self.products[name]
             if product_price.is_integer():
                 product_price = int(product_price)
             print(f"{amount} {name}s for {product_price} dollars")
-        total_cost = sum(amount * self.products[name] for name, amount in customer.product_cart.items())
+        total_cost = sum(
+            amount * self.products[name]
+            for name, amount in customer.product_cart.items()
+        )
         print(f"Total cost is {round(total_cost, 2)} dollars")
         print("See you again!\n")
         print(f"{customer.name} rides home")
         print(f"{customer.name} now has {customer.money} dollars\n")
-
-
