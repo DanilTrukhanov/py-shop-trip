@@ -28,8 +28,8 @@ class Shop:
 
     def sell(self, customer: Any) -> None:
         print("Date: 04/01/2021 12:33:41")
-        print(f"Thanks, {customer.name}, for your purchase!"
-              f"\nYou have bought: ")
+        print(f"Thanks, {customer.name}, for your purchase!")
+        print("You have bought:")
         for name, amount in customer.product_cart.items():
             product_price = amount * self.products[name]
             if product_price % int(product_price) == 0:
