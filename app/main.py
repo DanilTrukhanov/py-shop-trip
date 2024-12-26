@@ -6,7 +6,7 @@ from app.customer import Customer
 
 
 def get_data(info_key: str, creation_func: Callable) -> list:
-    with open("app/config.json", "r") as source:
+    with open("config.json", "r") as source:
         data = json.load(source)
     return [creation_func(info) for info in data[info_key]]
 

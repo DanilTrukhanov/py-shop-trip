@@ -32,7 +32,7 @@ class Shop:
               f"\nYou have bought: ")
         for name, amount in customer.product_cart.items():
             product_price = amount * self.products[name]
-            if product_price.is_integer():
+            if product_price % int(product_price) == 0:
                 product_price = int(product_price)
             print(f"{amount} {name}s for {product_price} dollars")
         total_cost = sum(
